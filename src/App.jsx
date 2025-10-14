@@ -71,7 +71,7 @@ const STRINGS = {
   }
 };
 
-const RECITATION_SRC = "/audio/badr-turki-men.mp3";
+const RECITATION_SRC = `${import.meta.env.BASE_URL}audio/badr-turki-men.mp3`;
 
 // ------- Sample dataset (replace with verified, licensed data) ---------
 const SAMPLE_DATA = [
