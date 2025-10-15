@@ -818,33 +818,35 @@ export default function App() {
       <audio ref={audioRef} src={RECITATION_SRC} preload="auto" aria-hidden="true" />
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/60 bg-white/80 dark:bg-neutral-900/80 border-b border-neutral-200 dark:border-neutral-800">
-        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">
-          <Book className="shrink-0" />
-          <h1 className="text-lg font-semibold tracking-tight">{t.title}</h1>
-          <div className="ms-auto flex items-center gap-2">
+        <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex items-center gap-2">
+            <Book className="h-6 w-6 shrink-0" />
+            <h1 className="text-base font-semibold tracking-tight sm:text-lg">{t.title}</h1>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 sm:ms-auto sm:justify-end">
             <button
-              className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="inline-flex w-full items-center justify-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 sm:w-auto"
               onClick={playRecitation}
               title={t.audioAttribution}
             >
               <Volume2 size={16} /> {t.audioPlay}
             </button>
             <button
-              className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="inline-flex w-full items-center justify-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 sm:w-auto"
               onClick={() => setShowVerse((v) => !v)}
               title={t.verseLabel}
             >
               <Info size={16} /> {t.verseLabel}
             </button>
             <button
-              className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="inline-flex w-full items-center justify-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 sm:w-auto"
               onClick={() => setLang((l) => (l === "ar" ? "en" : "ar"))}
               title={lang === "ar" ? t.showEnglish : t.hideEnglish}
             >
               <Globe size={16} /> {lang === "ar" ? t.showEnglish : t.hideEnglish}
             </button>
             <button
-              className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="inline-flex w-full items-center justify-center gap-1 rounded-full border px-3 py-1 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 sm:w-auto"
               onClick={() => setDark((d) => !d)}
               title={t.toggleTheme}
             >
@@ -855,7 +857,7 @@ export default function App() {
       </header>
 
       {audioAttempted && audioError && (
-        <div className="mx-auto max-w-7xl px-4 pt-3 text-sm text-amber-700 dark:text-amber-400">
+        <div className="mx-auto max-w-7xl px-4 pt-3 text-center text-sm text-amber-700 dark:text-amber-400 sm:text-end">
           {t.audioPrompt}
         </div>
       )}
@@ -883,17 +885,17 @@ export default function App() {
       <section className="mx-auto max-w-7xl px-4 py-6">
         <div className="grid gap-3 md:grid-cols-[1fr_auto] items-start">
           <div className="relative">
-            <Search className="absolute top-2.5 ms-3" size={18} />
+            <Search className="absolute top-3 ms-3 text-neutral-500" size={18} />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 ps-10 pe-4 py-2 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-700"
+              className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 ps-11 pe-4 py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-700"
             />
           </div>
           <details className="md:ms-2 group w-full md:w-auto">
             <summary className="list-none">
-              <button className="w-full inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              <button className="w-full inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800">
                 <Filter size={16} /> {t.filters}
               </button>
             </summary>
@@ -918,42 +920,44 @@ export default function App() {
                 {/* Age range */}
                 <div>
                   <label className="block text-sm mb-1">{t.ageRange}</label>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <input
                       type="number"
                       min={0}
                       max={120}
                       value={ageMin}
                       onChange={(e) => setAgeMin(Number(e.target.value))}
-                      className="w-20 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-2 py-2"
+                      className="w-20 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-2 py-2 text-sm"
                     />
-                    <span className="opacity-60">—</span>
+                    <span className="opacity-60 hidden sm:inline">—</span>
+                    <span className="opacity-60 text-xs sm:hidden">↓</span>
                     <input
                       type="number"
                       min={0}
                       max={120}
                       value={ageMax}
                       onChange={(e) => setAgeMax(Number(e.target.value))}
-                      className="w-20 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-2 py-2"
+                      className="w-20 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-2 py-2 text-sm"
                     />
                   </div>
                 </div>
                 {/* Date range */}
                 <div>
                   <label className="block text-sm mb-1">{t.dateRange}</label>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
                     <input
                       type="date"
                       value={dateStart}
                       onChange={(e) => setDateStart(e.target.value)}
-                      className="rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2"
+                      className="rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm"
                     />
-                    <span className="opacity-60">—</span>
+                    <span className="opacity-60 hidden sm:inline">—</span>
+                    <span className="opacity-60 text-xs sm:hidden text-center">↓</span>
                     <input
                       type="date"
                       value={dateEnd}
                       onChange={(e) => setDateEnd(e.target.value)}
-                      className="rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2"
+                      className="rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm"
                     />
                   </div>
                 </div>
@@ -963,7 +967,7 @@ export default function App() {
                   <select
                     value={tag}
                     onChange={(e) => setTag(e.target.value)}
-                    className="w-full rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2"
+                    className="w-full rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm"
                   >
                     <option value="">—</option>
                     {tagsAll.map((tg) => (
@@ -996,7 +1000,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.25, delay: i * 0.03 }}
-                  className="group relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur shadow-sm hover:shadow-md"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur shadow-sm hover:shadow-md"
                 >
                   <div className="aspect-[4/3] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800">
                     {licenseOK(m) ? (
@@ -1015,8 +1019,8 @@ export default function App() {
                       </div>
                     )}
                   </div>
-                  <div className="p-4 space-y-2">
-                    <h3 className="text-base md:text-lg font-semibold leading-snug">
+                  <div className="flex flex-1 flex-col p-4 space-y-3">
+                    <h3 className="text-base font-semibold leading-snug sm:text-lg">
                       {lang === "ar" ? m.full_name_ar : m.full_name_en || m.full_name_ar}
                     </h3>
                     <div className="text-sm opacity-80 flex flex-wrap gap-x-3 gap-y-1">
@@ -1076,14 +1080,14 @@ export default function App() {
       <AnimatePresence>
         {selected && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/70 px-4 py-6 backdrop-blur"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/70 px-3 py-6 backdrop-blur sm:px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelected(null)}
           >
             <motion.div
-              className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-white text-neutral-900 shadow-2xl ring-1 ring-neutral-900/10 dark:bg-neutral-900 dark:text-neutral-100 dark:ring-white/10"
+              className="relative w-full max-w-3xl h-full max-h-[90vh] overflow-hidden rounded-3xl bg-white text-neutral-900 shadow-2xl ring-1 ring-neutral-900/10 dark:bg-neutral-900 dark:text-neutral-100 dark:ring-white/10"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -1098,80 +1102,82 @@ export default function App() {
               >
                 <X size={18} />
               </button>
-              <div className="grid gap-6 md:grid-cols-[240px,1fr] p-6 md:p-8">
-                <div className="space-y-4">
-                  <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800">
-                    {licenseOK(selected) && selected.photo_url ? (
-                      <img
-                        src={selected.photo_url}
-                        alt={lang === "ar" ? (selected.full_name_ar || selected.full_name_en) : (selected.full_name_en || selected.full_name_ar)}
-                        className="w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex aspect-[4/3] items-center justify-center text-5xl font-black opacity-20">
-                        {initials(selected.full_name_ar || selected.full_name_en)}
-                      </div>
-                    )}
-                  </div>
-                  <div className="space-y-2 text-sm opacity-80">
-                    {selected.age != null && <div>{selected.age}</div>}
-                    {selected.hometown_ar && (
-                      <div>{lang === "ar" ? selected.hometown_ar : selected.hometown_en || selected.hometown_ar}</div>
-                    )}
-                    {selected.date_of_death && <div>{selected.date_of_death}</div>}
-                    {selected.tags && (
-                      <div className="flex flex-wrap gap-2">
-                        {selected.tags.map((tg) => (
-                          <span key={tg} className="rounded-full border px-2 py-0.5 text-xs opacity-80">
-                            {tg}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  {(selected.sources || []).length > 0 && (
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-semibold">{t.sources}</h4>
-                      <div className="flex flex-col gap-2">
-                        {selected.sources.map((s) => (
-                          <a
-                            key={s.url}
-                            href={s.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1 text-sm underline underline-offset-2 opacity-80 hover:no-underline"
-                          >
-                            {s.title || t.sources} <ExternalLink size={14} />
-                          </a>
-                        ))}
-                      </div>
+              <div className="h-full overflow-y-auto">
+                <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-[260px,1fr]">
+                  <div className="space-y-4">
+                    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800">
+                      {licenseOK(selected) && selected.photo_url ? (
+                        <img
+                          src={selected.photo_url}
+                          alt={lang === "ar" ? (selected.full_name_ar || selected.full_name_en) : (selected.full_name_en || selected.full_name_ar)}
+                          className="w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex aspect-[4/3] items-center justify-center text-5xl font-black opacity-20">
+                          {initials(selected.full_name_ar || selected.full_name_en)}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-xl font-semibold leading-tight">
-                      {lang === "ar" ? selected.full_name_ar || selected.full_name_en : selected.full_name_en || selected.full_name_ar}
-                    </h3>
-                    <p className="text-sm opacity-70">
-                      {lang === "ar" ? selected.full_name_en || "" : selected.full_name_ar || ""}
-                    </p>
-                  </div>
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide opacity-70">{biographyTitle}</h4>
-                    <p className="leading-relaxed text-base">
-                      {lang === "ar"
-                        ? selected.biography_ar || selected.biography_en || ""
-                        : selected.biography_en || selected.biography_ar || ""}
-                    </p>
-                    {selected.biography_ar && selected.biography_en && (
-                      <div className="rounded-2xl border border-neutral-200 bg-neutral-50/70 p-4 text-sm leading-relaxed dark:border-neutral-800 dark:bg-neutral-800/70">
-                        <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide opacity-70">{secondaryBiographyLabel}</h5>
-                        <p>
-                          {lang === "ar" ? selected.biography_en : selected.biography_ar}
-                        </p>
+                    <div className="space-y-2 text-sm opacity-80">
+                      {selected.age != null && <div>{selected.age}</div>}
+                      {selected.hometown_ar && (
+                        <div>{lang === "ar" ? selected.hometown_ar : selected.hometown_en || selected.hometown_ar}</div>
+                      )}
+                      {selected.date_of_death && <div>{selected.date_of_death}</div>}
+                      {selected.tags && (
+                        <div className="flex flex-wrap gap-2">
+                          {selected.tags.map((tg) => (
+                            <span key={tg} className="rounded-full border px-2 py-0.5 text-xs opacity-80">
+                              {tg}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    {(selected.sources || []).length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-semibold">{t.sources}</h4>
+                        <div className="flex flex-col gap-2">
+                          {selected.sources.map((s) => (
+                            <a
+                              key={s.url}
+                              href={s.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1 text-sm underline underline-offset-2 opacity-80 hover:no-underline"
+                            >
+                              {s.title || t.sources} <ExternalLink size={14} />
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     )}
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-xl font-semibold leading-tight">
+                        {lang === "ar" ? selected.full_name_ar || selected.full_name_en : selected.full_name_en || selected.full_name_ar}
+                      </h3>
+                      <p className="text-sm opacity-70">
+                        {lang === "ar" ? selected.full_name_en || "" : selected.full_name_ar || ""}
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-semibold uppercase tracking-wide opacity-70">{biographyTitle}</h4>
+                      <p className="leading-relaxed text-base">
+                        {lang === "ar"
+                          ? selected.biography_ar || selected.biography_en || ""
+                          : selected.biography_en || selected.biography_ar || ""}
+                      </p>
+                      {selected.biography_ar && selected.biography_en && (
+                        <div className="rounded-2xl border border-neutral-200 bg-neutral-50/70 p-4 text-sm leading-relaxed dark:border-neutral-800 dark:bg-neutral-800/70">
+                          <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide opacity-70">{secondaryBiographyLabel}</h5>
+                          <p>
+                            {lang === "ar" ? selected.biography_en : selected.biography_ar}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1190,7 +1196,7 @@ export default function App() {
           </div>
           <a
             href="mailto:contact@example.org?subject=Removal%20or%20Correction"
-            className="inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 sm:w-auto"
           >
             {t.removal} <X size={16} />
           </a>
@@ -1208,7 +1214,7 @@ function initials(name) {
 
 function FloatingFlag({ lang }) {
   return (
-    <div className="pointer-events-none fixed top-4 right-4 z-50">
+    <div className="pointer-events-none fixed top-3 right-3 z-50 origin-top-right scale-75 sm:top-4 sm:right-4 sm:scale-100">
       <div className="flag-floating flex flex-col items-center gap-1">
         <div className="rounded-xl bg-white/90 dark:bg-neutral-900/90 p-2 shadow-lg ring-1 ring-black/10 dark:ring-white/10 backdrop-blur">
           <PalestineFlag className="flag-wave h-10 w-16" />
